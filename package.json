@@ -1,0 +1,18 @@
+{
+  "name": "backendpackage",
+  "version": "1.0.0",
+  "description": "Test project for netcraker back end w8 mysql",
+  "main": "index.js",
+  "scripts": {
+    "test": "-//-"
+  },
+  "repository": {
+    "type": "git",
+    "url": "-//-"
+  },
+  "keywords": [
+    "backend"
+  ],
+  "author": "rstp",
+  "license": "ISC"
+}
