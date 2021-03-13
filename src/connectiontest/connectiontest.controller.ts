@@ -1,6 +1,5 @@
 import { Controller, Get, Param } from '@nestjs/common';
 import {Connection} from 'typeorm';
-import { getFileInfo } from 'prettier';
 
 @Controller('connectiontest')
 export class ConnectiontestController {
@@ -9,8 +8,8 @@ export class ConnectiontestController {
     getStatus() : boolean {
         return this.con.isConnected; 
     }
-    @Get(':id') 
-    getFileInfo(@Param('id') id: string) {
+    @Get() 
+    getInfo() {
         return this.con.options; 
     }
 }
