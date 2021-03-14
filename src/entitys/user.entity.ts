@@ -17,7 +17,7 @@ export class User {
   @Column()
   email: string; 
 
-  @Column()
+  @Column({default : 0})
   purchasesSum: number;
 
   @Column()
@@ -27,7 +27,7 @@ export class User {
   bithDate: Date;
   
   @Column()
-  passsword: string; 
+  password: string; 
 
   @Column({ default: false })
   isActive: boolean;
