@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Param, Put, Delete, Body, BadRequestException, NotFoundException, HttpException, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Post, Param, Put, Delete, Body, HttpException, HttpStatus } from '@nestjs/common';
 import { User } from 'src/entitys/user.entity';
 import { CreateUsersDto, UpdateUsersDto } from './users.dto';
 import { UsersService } from './users.service';
@@ -22,15 +22,16 @@ export class UsersController {
     
     @Get(':id')
     async getUserbyId(@Param('id') id:number) : Promise<User> {
-        if ( await this.UsersService.findOne(id) === undefined) 
+        const temp =  await this.UsersService.findOne(id); 
+        if ( temp  === undefined) 
         {
             throw new HttpException(`Can not get User id = ${id}`,HttpStatus.NOT_FOUND); 
         }
-        return this.UsersService.findOne(id); 
+        return temp; 
     }
 
     @Post()
-    addUsertoDB(@Body() CreateUsersDto: CreateUsersDto): Promise<User>{ 
+    addUsertoDB(@Body() CreateUsersDto: CreateUsersDto): HttpException{ 
         const newUser = new User() ; 
         newUser.firstName = CreateUsersDto.firstName ; 
         newUser.lastName= CreateUsersDto.lastName ; 
@@ -42,14 +43,16 @@ export class UsersController {
         newUser.password = CreateUsersDto.password ;
         newUser.isActive = CreateUsersDto.isActive ; 
         newUser.role = CreateUsersDto.role ;
-        return this.UsersService.create(newUser); 
+        this.UsersService.create(newUser); 
+        return new HttpException('User is created everything is OK!',HttpStatus.OK);
+        
     }
 
     @Put(':id')
     async updateUserInfo(
         @Param('id') id:number, 
         @Body() {firstName,lastName,phone,email,purchasesSum,sex,bithDate,password,isActive,role}: UpdateUsersDto
-        ) :Promise<User> {
+        ) :Promise<HttpException> {
         const upUser = await this.UsersService.findOne(id); 
         if (upUser === undefined) {
             throw new HttpException(`Can not get User id = ${id}`,HttpStatus.NOT_FOUND); 
@@ -64,11 +67,15 @@ export class UsersController {
         upUser.password = password ;
         upUser.isActive = isActive ; 
         upUser.role = role ;    
-        return this.UsersService.update(upUser); 
+        this.UsersService.update(upUser); 
+        return new HttpException('User is updated everything is OK!',HttpStatus.OK);
+        
     }
 
     @Delete(':id')
-    userInfoDelete(@Param('id') id:string) : Promise<void> { 
-        return this.UsersService.remove(id); 
+    userInfoDelete(@Param('id') id:string) : HttpException { 
+        this.UsersService.remove(id); 
+        return new HttpException('User is deleted everything is OK!',HttpStatus.OK);
+        
     }
 }
