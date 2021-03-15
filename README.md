@@ -1,45 +1,67 @@
-**Edit a file, create a new file, and clone from Bitbucket in under 2 minutes**
+To BE start working u need to download it, unpackage in empty folder, open folder in VSC. 
+Next type 'npm i' command to install all depences. 
+After this type 'nest start --watch' 
+Next open http://localhost:3000/connectiontest in browser to check DB connection if it's fine u can use BackEnd http
 
-When you're done, you can delete the content in this README and update the file with details for others getting started with your repository.
+GET : 
+http://localhost:3000/users - All Users 
+http://localhost:3000/users/1 - User w8 id 1 
 
-*We recommend that you open this README in another tab as you perform the tasks below. You can [watch our video](https://youtu.be/0ocf7u76WSo) for a full demo of all the steps in this tutorial. Open the video in a new tab to avoid leaving Bitbucket.*
+http://localhost:3000/orders - All Orders 
+http://localhost:3000/orders/1 - Order w8 id 1 
 
----
+http://localhost:3000/products - All Products 
+http://localhost:3000/products/1 - Products w8 id 1 
 
-## Edit a file
+POST/PUT :
+http://localhost:3000/users - Create Users 
+http://localhost:3000/users/1 - update User w8 id 1 
 
-You’ll start by editing this README file to learn how to edit a file in Bitbucket.
+http://localhost:3000/orders - Create Order 
+http://localhost:3000/orders/1 - update Order w8 id 1 
 
-1. Click **Source** on the left side.
-2. Click the README.md link from the list of files.
-3. Click the **Edit** button.
-4. Delete the following text: *Delete this line to make a change to the README from Bitbucket.*
-5. After making your change, click **Commit** and then **Commit** again in the dialog. The commit page will open and you’ll see the change you just made.
-6. Go back to the **Source** page.
+http://localhost:3000/products - Create Produc 
+http://localhost:3000/products/1 - update Products w8 id 1 
 
----
+DELETE : 
+http://localhost:3000/users/1 - delete User w8 id 1 
 
-## Create a file
+http://localhost:3000/orders/1 - delete Order w8 id 1 
 
-Next, you’ll add a new file to this repository.
+http://localhost:3000/products/1 -delete Products w8 id 1 
 
-1. Click the **New file** button at the top of the **Source** page.
-2. Give the file a filename of **contributors.txt**.
-3. Enter your name in the empty file space.
-4. Click **Commit** and then **Commit** again in the dialog.
-5. Go back to the **Source** page.
+If POST/PUT/DELETE was succsesful server wiil return 200 and message about it
 
-Before you move on, go ahead and explore the repository. You've already seen the **Source** page, but check out the **Commits**, **Branches**, and **Settings** pages.
-
----
-
-## Clone a repository
-
-Use these steps to clone from SourceTree, our client for using the repository command-line free. Cloning allows you to work on your files locally. If you don't yet have SourceTree, [download and install first](https://www.sourcetreeapp.com/). If you prefer to clone from the command line, see [Clone a repository](https://confluence.atlassian.com/x/4whODQ).
-
-1. You’ll see the clone button under the **Source** heading. Click that button.
-2. Now click **Check out in SourceTree**. You may need to create a SourceTree account or log in.
-3. When you see the **Clone New** dialog in SourceTree, update the destination path and name if you’d like to and then click **Clone**.
-4. Open the directory you just created to see your repository’s files.
-
-Now that you're more familiar with your Bitbucket repository, go ahead and add a new file locally. You can [push your change back to Bitbucket with SourceTree](https://confluence.atlassian.com/x/iqyBMg), or you can [add, commit,](https://confluence.atlassian.com/x/8QhODQ) and [push from the command line](https://confluence.atlassian.com/x/NQ0zDQ).
+Tables structure (id generated automatically) : 
+Users {
+    "id": 1,
+    "firstName": "Ivan",
+    "lastName": "Sergeev",
+    "phone": "+78919978802",
+    "email": "Ivan@rambler.su",
+    "purchasesSum": 4456,
+    "sex": true,
+    "bithDate": "2021-01-02T21:00:00.000Z",
+    "password": "qwerty",
+    "isActive": true,
+    "role": "user"
+},
+Products{
+    "id": 1,
+    "productName": "iPhone",
+    "type": "SmartPhone",
+    "description": "Phone that u deserve",
+    "price": 50000,
+    "count": 10
+},
+Orders{
+    "id": 1,
+    "userid": 2,
+    "order": [
+        "iPhone",
+        " Motherboard"
+    ],
+    "cost": 58000,
+    "status": false,
+    "address": "Lenina street  45"
+}
