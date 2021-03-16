@@ -2,6 +2,8 @@ import { Controller, Get, Post, Param, Put, Delete, Body, HttpException, HttpSta
 import { User } from 'src/entitys/user.entity';
 import { CreateUsersDto, UpdateUsersDto } from './users.dto';
 import { UsersService } from './users.service';
+import { ApiTags, ApiBody, ApiResponse } from '@nestjs/swagger';
+import { NotFoundResponse } from '../type'; 
 
 /* 
 TODO: 
@@ -15,11 +17,16 @@ TODO:
 export class UsersController {
     constructor(private readonly UsersService : UsersService) {}
 
+    @ApiTags('GET')
+    @ApiResponse({status : 200 , description: 'Return a array of users', type : [User]})
     @Get()
     getAllUsers() : Promise<User[]>{
         return this.UsersService.findAll(); 
     }
     
+    @ApiTags('GET')
+    @ApiResponse({status : 200 , description: 'Return a json format user by id', type : User})
+    @ApiResponse({status : 404 , description: 'Not Found', type : NotFoundResponse})
     @Get(':id')
     async getUserbyId(@Param('id') id:number) : Promise<User> {
         const temp =  await this.UsersService.findOne(id); 
@@ -30,6 +37,9 @@ export class UsersController {
         return temp; 
     }
 
+    @ApiTags('POST/PUT')
+    @ApiBody({type: CreateUsersDto})
+    @ApiResponse({status : 200 , description: 'Return a message : "User is created everything is OK!" and status code'})
     @Post()
     addUsertoDB(@Body() CreateUsersDto: CreateUsersDto): HttpException{ 
         const newUser = new User() ; 
@@ -48,6 +58,10 @@ export class UsersController {
         
     }
 
+    @ApiTags('POST/PUT')
+    @ApiBody({type: UpdateUsersDto})
+    @ApiResponse({status : 200 , description: 'Return a message : "User is updated everything is OK!" and status code'})
+    @ApiResponse({status : 404 , description: 'Not Found', type : NotFoundResponse})
     @Put(':id')
     async updateUserInfo(
         @Param('id') id:number, 
@@ -72,6 +86,8 @@ export class UsersController {
         
     }
 
+    @ApiTags('DELETE')
+    @ApiResponse({status : 200 , description: 'Return a message : "User is deleted everything is OK!" and status code'})
     @Delete(':id')
     userInfoDelete(@Param('id') id:string) : HttpException { 
         this.UsersService.remove(id); 

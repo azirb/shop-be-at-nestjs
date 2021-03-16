@@ -2,21 +2,28 @@ import { Controller, Get, Put, Param, HttpException, HttpStatus, Post, Body, Del
 import { OrdersService } from './orders.service';
 import { Orders } from 'src/entitys/orders.entity';
 import { createOrdersDto, updateOrdersDto } from './orders.dto';
-import { userInfo } from 'os';
+import { ApiTags, ApiBody, ApiResponse } from '@nestjs/swagger';
+import { NotFoundResponse } from '../type'; 
+
 
 
 @Controller('orders')
 export class OrdersController {
     constructor(private readonly OrdersService:OrdersService) {}
 
+    @ApiTags('GET')
+    @ApiResponse({status : 200 , description: 'Return a array of orders', type : [Orders]})
     @Get() 
     getAllOrders() : Promise<Orders[]> {
         return this.OrdersService.findAll(); 
     }
 
+    @ApiTags('GET')
+    @ApiResponse({status : 200 , description: 'Return a json format order by id', type : Orders})
+    @ApiResponse({status : 404 , description: 'Not Found', type : NotFoundResponse})
     @Get(':id')
     async getOrderbyId(@Param('id') id : number) : Promise<Orders> {
-       const temp = this.OrdersService.findOne(id); 
+       const temp = await this.OrdersService.findOne(id); 
         if ( temp  === undefined) 
         {
             throw new HttpException(`Can not get Order id = ${id}`,HttpStatus.NOT_FOUND); 
@@ -24,6 +31,9 @@ export class OrdersController {
         return temp; 
     }
 
+    @ApiTags('POST/PUT')
+    @ApiBody({type: createOrdersDto})
+    @ApiResponse({status : 200 , description: 'Return a message : "New Order created everything is OK!" and status code'})
     @Post()
     addOrdertoDB(@Body() createOrdersDto:createOrdersDto) : HttpException {
         const newOrder = new Orders(); 
@@ -36,6 +46,10 @@ export class OrdersController {
          
     }
 
+    @ApiTags('POST/PUT')
+    @ApiBody({type: updateOrdersDto})
+    @ApiResponse({status : 200 , description: 'Return a message : "Order is updated everything is OK!" and status code'})
+    @ApiResponse({status : 404 , description: 'Not Found', type : NotFoundResponse})
     @Put(':id') 
     async updateOrderInfo( 
         @Param('id') id : number,
@@ -53,6 +67,8 @@ export class OrdersController {
         return new HttpException('Order is updated everything is OK!',HttpStatus.OK);
     }
 
+    @ApiTags('DELETE')
+    @ApiResponse({status : 200 , description: 'Return a message : "Order is deleted everything is OK!" and status code'})
     @Delete(':id')
     deleteOrder(@Param('id') id:number) : HttpException {
         this.OrdersService.remove(id); 

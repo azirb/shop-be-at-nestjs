@@ -2,7 +2,8 @@ import { Controller, Get, Post, Param, HttpException, HttpStatus, Body, Put, Del
 import { ProductsService } from './products.service';
 import { Products } from 'src/entitys/products.entity';
 import { CreateProductDto, UpdateProductDto } from './products.dto';
-import { runInThisContext } from 'vm';
+import { ApiTags, ApiBody, ApiResponse } from '@nestjs/swagger';
+import { NotFoundResponse } from '../type'; 
 
 /* 
 TODO: 
@@ -16,11 +17,16 @@ TODO:
 export class ProductsController {
     constructor(private readonly ProductsService:ProductsService) {}
 
+    @ApiTags('GET')
+    @ApiResponse({status : 200 , description: 'Return a array of products' , type : [Products]})
     @Get() 
     getAllProducts(): Promise<Products[]> {
         return this.ProductsService.findAll(); 
     }
 
+    @ApiTags('GET')
+    @ApiResponse({status : 200 , description: 'Return a json format order by id', type : Products})
+    @ApiResponse({status : 404 , description: 'Not Found', type : NotFoundResponse})
     @Get(':id')
     async getProductbyId(@Param('id') id: number) : Promise<Products> {
        const temp = await this.ProductsService.findOne(id); 
@@ -30,6 +36,9 @@ export class ProductsController {
         return temp ; 
     }
 
+    @ApiTags('POST/PUT')
+    @ApiBody({type: CreateProductDto})
+    @ApiResponse({status : 200 , description: 'Return a message : "Product is created everything is OK!" and status code'})
     @Post() 
     addProducttoDB(@Body() CreateProductDto:CreateProductDto) :HttpException {
         const newProduct = new Products(); 
@@ -43,6 +52,10 @@ export class ProductsController {
          
     }
 
+    @ApiTags('POST/PUT')
+    @ApiBody({type: UpdateProductDto})
+    @ApiResponse({status : 200 , description: 'Return a message : "Product is updated everything is OK!" and status code'})
+    @ApiResponse({status : 404 , description: 'Not Found', type : NotFoundResponse})
     @Put(':id') 
     async updateProductInfo(
         @Param('id') id:number, 
@@ -61,6 +74,8 @@ export class ProductsController {
         return new HttpException('Product is updated everything is OK!',HttpStatus.OK);
     }
 
+    @ApiTags('DELETE')
+    @ApiResponse({status : 200 , description: 'Return a message : "Product is deleted everything is OK!" and status code'})
     @Delete(':id')
     productDelete(@Param('id') id:number) : HttpException {
         this.ProductsService.remove(id); 
