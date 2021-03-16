@@ -1,8 +1,8 @@
 {
   "name": "be",
-  "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "version": "0.1.0",
+  "description": "To BE start working u need to download it, unpackage in empty folder, open folder in VSC. \r Next type 'npm i' command to install all depences. \r After this type 'nest start --watch' \r Next open http://localhost:3000/connectiontest in browser to check DB connection if it's fine u can use BackEnd http",
+  "author": "rstp",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
@@ -26,6 +26,8 @@
     "@nestjs/platform-express": "^7.6.13",
     "@nestjs/swagger": "^4.7.16",
     "reflect-metadata": "^0.1.13",
+    "@nestjs/typeorm": "",
+    "typeorm": "",
     "rimraf": "^3.0.2",
     "rxjs": "^6.6.6",
     "swagger-ui-express": "^4.1.6"
@@ -68,5 +70,21 @@
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
-  }
+  },
+  "main": "-//-",
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/azirb/shop-be-at-nestjs.git"
+  },
+  "keywords": [
+    "back",
+    "end"
+  ],
+  "bugs": {
+    "url": "https://github.com/azirb/shop-be-at-nestjs/issues"
+  },
+  "homepage": "https://github.com/azirb/shop-be-at-nestjs#readme"
 }
