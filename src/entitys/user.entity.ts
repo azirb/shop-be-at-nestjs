@@ -37,7 +37,7 @@ export class User {
   
   @ApiProperty({description: 'User password to login md5 encryption'})
   @Column()
-  password: string; 
+  password?: string; 
 
   @ApiProperty({required : false , description : 'User is approved acc by phone or email' , default: false})
   @Column({ default: false })

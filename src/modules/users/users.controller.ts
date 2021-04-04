@@ -1,9 +1,10 @@
-import { Controller, Get, Post, Param, Put, Delete, Body, HttpException, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Post, Param, Put, Delete, Body, HttpException, HttpStatus, Req, Query } from '@nestjs/common';
 import { User } from 'src/entitys/user.entity';
 import { CreateUsersDto, UpdateUsersDto } from './users.dto';
 import { UsersService } from './users.service';
 import { ApiTags, ApiBody, ApiResponse } from '@nestjs/swagger';
 import { NotFoundResponse } from '../type'; 
+import {Request} from 'express';
 
 /* 
 TODO: 
@@ -17,12 +18,12 @@ TODO:
 export class UsersController {
     constructor(private readonly UsersService : UsersService) {}
 
-    @ApiTags('GET')
+   /*@ApiTags('GET')
     @ApiResponse({status : 200 , description: 'Return a array of users', type : [User]})
     @Get()
     getAllUsers() : Promise<User[]>{
         return this.UsersService.findAll(); 
-    }
+    }*/
     
     @ApiTags('GET')
     @ApiResponse({status : 200 , description: 'Return a json format user by id', type : User})
@@ -35,6 +36,31 @@ export class UsersController {
             throw new HttpException(`Can not get User id = ${id}`,HttpStatus.NOT_FOUND); 
         }
         return temp; 
+    }
+
+
+    @ApiTags('GET')
+    @ApiResponse({status : 200 , description: 'Return a array of users or 1 User', type : [User]})
+    @ApiResponse({status : 200 , description: 'Return 1 user whith phone', type : [User]})
+    @ApiResponse({status : 400 , description: 'Can not find this User, or Bad API request!'})
+    @Get() 
+    async getUserbyPhone(
+        @Query('phone') phone: string,
+    ) : Promise<User[]>
+    {
+        if (phone === '')
+        {
+            return this.UsersService.findAll(); 
+        }
+
+        const searchUser = await this.UsersService.findByPhone(phone); 
+
+        if(searchUser.length === 0) 
+        {
+            throw new HttpException(`Can not find this User, or Bad API request!`,HttpStatus.BAD_REQUEST); 
+        }
+
+        return searchUser; 
     }
 
     @ApiTags('POST/PUT')

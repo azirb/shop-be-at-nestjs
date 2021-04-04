@@ -1,32 +1,24 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { AppController } from './app.controller';
+import { ConfigModule } from '@nestjs/config';
 import { AppService } from './app.service';
 import { ConnectiontestModule } from './connectiontest/connectiontest.module';
 import { UsersModule } from './modules/users/users.module';
 import { ProductsModule } from './modules/products/products.module';
 import { OrdersModule } from './modules/orders/orders.module';
-import { User } from './entitys/user.entity';
-import { Products } from './entitys/products.entity';
-import { Orders } from './entitys/orders.entity';
+import { AuthModule } from './modules/auth/auth.module';
 
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: "mysql",
-      host: "sql11.freemysqlhosting.net",
-      port: 3306,
-      username: "sql11398572",
-      password: "fTp8vtVCAf",
-      database: "sql11398572",
-      entities: [User,Products,Orders],
-      synchronize: true
-    }),
+    TypeOrmModule.forRoot(),
     ConnectiontestModule, 
     UsersModule,
     ProductsModule, 
-    OrdersModule
+    OrdersModule, 
+    AuthModule, 
+    ConfigModule.forRoot()
   ],
   controllers: [AppController],
   providers: [AppService],
