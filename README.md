@@ -1,40 +1,45 @@
-To BE start working u need to download it, unpackage in empty folder, open folder in VSC. 
-Next type 'npm i' command to install all depences. 
-After this type 'nest start --watch' 
-Next open http://localhost:3000/connectiontest in browser to check DB connection if it's fine u can use BackEnd http
 
-GET : 
-http://localhost:3000/users - All Users 
-http://localhost:3000/users/1 - User w8 id 1 
+# Installation
+To BE start working u need to download it, unpackage in empty folder, open folder in VSC.  
+Next type 'npm i' command to install all depences.   
+After this type 'nest start --watch'   
+Next open http://localhost:3000/connectiontest in browser to check DB connection if it's fine u can use BackEnd http  
+  
+# API requests   
+GET :   
+http://localhost:3000/users - All Users   
+http://localhost:3000/users/1 - User w8 id 1   
+  
+http://localhost:3000/orders - All Orders   
+http://localhost:3000/orders/1 - Order w8 id 1   
+  
+http://localhost:3000/products - All Products   
+http://localhost:3000/products/1 - Products w8 id 1   
+  
+POST/PUT :  
+http://localhost:3000/users - Create Users   
+http://localhost:3000/users/1 - update User w8 id 1   
+  
+http://localhost:3000/orders - Create Order   
+http://localhost:3000/orders/1 - update Order w8 id 1   
+  
+http://localhost:3000/products - Create Produc   
+http://localhost:3000/products/1 - update Products w8 id 1   
+  
+DELETE :   
+http://localhost:3000/users/1 - delete User w8 id 1   
+  
+http://localhost:3000/orders/1 - delete Order w8 id 1   
+  
+http://localhost:3000/products/1 -delete Products w8 id 1   
+  
+If POST/PUT/DELETE was succsesful server wiil return 200 and message about it  
+  
+# Tables structure   
 
-http://localhost:3000/orders - All Orders 
-http://localhost:3000/orders/1 - Order w8 id 1 
-
-http://localhost:3000/products - All Products 
-http://localhost:3000/products/1 - Products w8 id 1 
-
-POST/PUT :
-http://localhost:3000/users - Create Users 
-http://localhost:3000/users/1 - update User w8 id 1 
-
-http://localhost:3000/orders - Create Order 
-http://localhost:3000/orders/1 - update Order w8 id 1 
-
-http://localhost:3000/products - Create Produc 
-http://localhost:3000/products/1 - update Products w8 id 1 
-
-DELETE : 
-http://localhost:3000/users/1 - delete User w8 id 1 
-
-http://localhost:3000/orders/1 - delete Order w8 id 1 
-
-http://localhost:3000/products/1 -delete Products w8 id 1 
-
-If POST/PUT/DELETE was succsesful server wiil return 200 and message about it
-
-Tables structure (id generated automatically) : 
-Users {
-    "id": 1,
+```json 
+Users {  
+    "id": 1, (id generated automatically)
     "firstName": "Ivan",
     "lastName": "Sergeev",
     "phone": "+78919978802",
@@ -65,4 +70,4 @@ Orders{
     "status": false,
     "address": "Lenina street  45"
 }
-
+```
