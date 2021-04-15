@@ -39,7 +39,7 @@ If POST/PUT/DELETE was succsesful server wiil return 200 and message about it
 
 ```json 
 Users {  
-    "id": 1, (id generated automatically)
+    "id": 1, //(id generated automatically)
     "firstName": "Ivan",
     "lastName": "Sergeev",
     "phone": "+78919978802",
